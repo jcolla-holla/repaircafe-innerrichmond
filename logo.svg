@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="240" height="240" viewBox="0 0 240 240" role="img" aria-label="Repair Café Inner Richmond">
+  <defs><clipPath id="rcClip"><circle cx="120" cy="120" r="104"/></clipPath></defs>
+  <circle cx="120" cy="120" r="112" fill="#1C2740"/>
+  <circle cx="120" cy="120" r="104" fill="#2E3F5C"/>
+  <g clip-path="url(#rcClip)" fill="none" stroke="#CDD8EA" stroke-linecap="round">
+    <path d="M24,150 q22,-11 44,0 t44,0 t44,0 t44,0" stroke-width="6" opacity="0.55"/>
+    <path d="M16,172 q24,-10 48,0 t48,0 t48,0 t48,0" stroke-width="7" opacity="0.4"/>
+    <path d="M30,192 q22,-9 44,0 t44,0 t44,0 t44,0" stroke-width="6" opacity="0.3"/>
+  </g>
+  <g transform="rotate(24 120 120)">
+    <path d="M98,52 Q98,46 104,46 L110,46 L110,62 L116,74 L116,82 L124,82 L124,74 L130,62 L130,46 L136,46 Q142,46 142,52 L142,92 Q142,98 136,100 L130,104 L128,114 L128,184 Q128,192 120,192 Q112,192 112,184 L112,114 L110,104 L104,100 Q98,98 98,92 Z" fill="#E9C46A"/>
+  </g>
+  <g transform="rotate(-24 120 120)">
+    <path fill-rule="evenodd" fill="#E9C46A" d="M120,52 Q115,52 114,62 L112,150 L120,196 L128,150 L126,62 Q125,52 120,52 Z M117,66 a3,6.5 0 1,0 6,0 a3,6.5 0 1,0 -6,0 Z"/>
+    <path d="M120,66 C96,58 82,86 96,108 C104,121 93,137 77,139" fill="none" stroke="#C25434" stroke-width="5" stroke-linecap="round"/>
+  </g>
+  <circle cx="120" cy="120" r="104" fill="none" stroke="#E9C46A" stroke-width="3"/>
+  <circle cx="120" cy="120" r="97" fill="none" stroke="#E9C46A" stroke-width="1" opacity="0.5"/>
+</svg>

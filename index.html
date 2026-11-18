@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Foggy Fixers — A Repair Café in the Inner Richmond</title>
+<meta name="description" content="Foggy Fixers is a new, volunteer-run repair café coming to the Inner Richmond in San Francisco. Join the email list, sign up to volunteer, or follow along as we get started.">
+<meta name="theme-color" content="#2E3F5C">
+<style>
+  :root {
+    --canvas: #E7E1CE;
+    --canvas-line: #CBC1A2;
+    --ink: #1E2433;
+    --ink-soft: #4A5064;
+    --denim: #2E3F5C;
+    --denim-deep: #202A3F;
+    --thread: #A8432B;
+    --thread-bright: #C25434;
+    --sage: #5F7350;
+    --focus: #1E2433;
+    --max-width: 920px;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --canvas: #1A202E;
+      --canvas-line: #3A4256;
+      --ink: #EDE6D3;
+      --ink-soft: #B9B2A0;
+      --denim: #C9D3E6;
+      --denim-deep: #0F1420;
+      --thread: #D9704E;
+      --thread-bright: #E88D66;
+      --sage: #8FA37A;
+      --focus: #EDE6D3;
+    }
+  }
+  :root[data-theme="dark"] {
+    --canvas: #1A202E;
+    --canvas-line: #3A4256;
+    --ink: #EDE6D3;
+    --ink-soft: #B9B2A0;
+    --denim: #C9D3E6;
+    --denim-deep: #0F1420;
+    --thread: #D9704E;
+    --thread-bright: #E88D66;
+    --sage: #8FA37A;
+    --focus: #EDE6D3;
+  }
+  :root[data-theme="light"] {
+    --canvas: #E7E1CE;
+    --canvas-line: #CBC1A2;
+    --ink: #1E2433;
+    --ink-soft: #4A5064;
+    --denim: #2E3F5C;
+    --denim-deep: #202A3F;
+    --thread: #A8432B;
+    --thread-bright: #C25434;
+    --sage: #5F7350;
+    --focus: #1E2433;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    * { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+  }
+
+  body {
+    margin: 0;
+    background: var(--canvas);
+    color: var(--ink);
+    font-family: 'Iowan Old Style', 'Palatino Linotype', Palatino, 'Noto Serif', Georgia, serif;
+    font-size: 1.0625rem;
+    line-height: 1.6;
+  }
+
+  h1, h2, h3, .wordmark, .nav a, .btn, .step-num, .patch h3 {
+    font-family: 'Futura', 'Futura PT', 'Century Gothic', 'URW Gothic', 'Noto Sans', sans-serif;
+    font-stretch: condensed;
+  }
+
+  a { color: var(--thread); }
+  a:focus-visible, button:focus-visible, input:focus-visible {
+    outline: 3px solid var(--focus);
+    outline-offset: 2px;
+  }
+
+  .wrap {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  /* ---------- header ---------- */
+  .site-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.4rem 1.5rem;
+    max-width: var(--max-width);
+    margin: 0 auto;
+  }
+  .wordmark {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.1;
+    text-decoration: none;
+    color: var(--ink);
+  }
+  .wordmark .big {
+    font-size: 1.3rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+  .wordmark .small {
+    font-family: 'Iowan Old Style', Palatino, Georgia, serif;
+    font-style: italic;
+    font-size: 0.82rem;
+    color: var(--ink-soft);
+  }
+  nav.nav {
+    display: flex;
+    gap: 1.6rem;
+  }
+  nav.nav a {
+    color: var(--ink);
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 600;
+    border-bottom: 2px solid transparent;
+    padding-bottom: 2px;
+  }
+  nav.nav a:hover { border-bottom-color: var(--thread); }
+  .nav-toggle { display: none; }
+  .nav-toggle-btn {
+    display: none;
+    background: none;
+    border: 2px solid var(--ink);
+    border-radius: 4px;
+    padding: 0.4rem 0.6rem;
+    font-size: 0.95rem;
+    color: var(--ink);
+    cursor: pointer;
+  }
+
+  @media (max-width: 640px) {
+    .nav-toggle-btn { display: inline-block; }
+    nav.nav {
+      position: absolute;
+      top: 4.2rem;
+      left: 1rem;
+      right: 1rem;
+      flex-direction: column;
+      background: var(--canvas);
+      border: 2px dashed var(--canvas-line);
+      padding: 1rem 1.2rem;
+      gap: 0.9rem;
+      display: none;
+      z-index: 10;
+    }
+    nav.nav.open { display: flex; }
+  }
+
+  /* ---------- seam divider ---------- */
+  .seam {
+    height: 3px;
+    background-image: repeating-linear-gradient(to right, var(--thread) 0 9px, transparent 9px 17px);
+    max-width: var(--max-width);
+    margin: 0 auto;
+    opacity: 0.85;
+  }
+
+  /* ---------- hero ---------- */
+  .hero {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 2.5rem 1.5rem 3.5rem;
+  }
+  .hero h1 {
+    font-size: clamp(2.1rem, 5vw, 3.1rem);
+    line-height: 1.05;
+    margin: 0 0 1rem;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+    max-width: 16ch;
+  }
+  .hero p.lede {
+    font-size: 1.15rem;
+    color: var(--ink-soft);
+    max-width: 38ch;
+    margin: 0 0 1.8rem;
+  }
+  .hero-ctas { display: flex; flex-wrap: wrap; align-items: center; gap: 0.9rem; }
+
+  .btn {
+    display: inline-block;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.95rem;
+    padding: 0.75rem 1.3rem;
+    border-radius: 3px;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: transform 0.12s ease;
+  }
+  .btn:hover { transform: translateY(-1px); }
+  .btn:active { transform: translateY(1px); }
+  .btn-primary { background: var(--thread); color: #FBF7EC; }
+  .btn-primary:hover { background: var(--thread-bright); }
+  .btn-outline { background: transparent; border-color: var(--ink); color: var(--ink); }
+  .btn-outline:hover { border-color: var(--thread); color: var(--thread); }
+  .btn-lg { font-size: 1.05rem; padding: 0.95rem 1.7rem; }
+
+  /* ---------- sections ---------- */
+  section { max-width: var(--max-width); margin: 0 auto; padding: 3.2rem 1.5rem; }
+  section h2 {
+    font-size: 1.7rem;
+    margin: 0 0 1.1rem;
+    letter-spacing: -0.01em;
+  }
+  section p { color: var(--ink-soft); max-width: 62ch; }
+  section p + p { margin-top: 1rem; }
+
+  /* ---------- what we fix ---------- */
+  .tag-board { display: flex; flex-wrap: wrap; gap: 0.7rem; margin: 1.4rem 0 1.6rem; }
+  .tag {
+    font-family: 'Futura', 'Century Gothic', 'Noto Sans', sans-serif;
+    font-size: 0.92rem;
+    font-weight: 600;
+    padding: 0.5rem 0.95rem;
+    border: 2px dashed var(--canvas-line);
+    border-radius: 2px;
+    background: color-mix(in srgb, var(--sage) 12%, transparent);
+    color: var(--ink);
+  }
+  .tag:nth-child(3n+1) { transform: rotate(-1deg); }
+  .tag:nth-child(3n+2) { transform: rotate(0.8deg); }
+  .tag:nth-child(3n)   { transform: rotate(-0.4deg); }
+
+  .subhead { margin-top: 2.6rem; }
+
+  .no-fix {
+    list-style: none;
+    margin: 1.3rem 0 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.7rem 2rem;
+    max-width: none;
+  }
+  @media (max-width: 620px) {
+    .no-fix { grid-template-columns: 1fr; }
+  }
+  .no-fix li {
+    position: relative;
+    padding-left: 1.6rem;
+    color: var(--ink-soft);
+    font-size: 0.97rem;
+    line-height: 1.45;
+  }
+  .no-fix li::before {
+    content: "\00d7";
+    position: absolute;
+    left: 0;
+    top: -0.05em;
+    color: var(--thread);
+    font-weight: 700;
+    font-size: 1.15rem;
+    font-family: 'Futura', 'Century Gothic', 'Noto Sans', sans-serif;
+  }
+
+  /* ---------- how it works ---------- */
+  .steps { list-style: none; margin: 1.4rem 0 0; padding: 0; display: flex; flex-direction: column; gap: 1.6rem; }
+  .steps li { display: flex; gap: 1.1rem; align-items: baseline; }
+  .step-num {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--thread);
+    min-width: 2.2rem;
+  }
+  .steps h3 { margin: 0 0 0.25rem; font-size: 1.1rem; font-family: 'Iowan Old Style', Palatino, Georgia, serif; font-weight: 700; }
+  .steps p { margin: 0; }
+  .step-points {
+    margin: 0.6rem 0 0;
+    padding-left: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+  .step-points li {
+    position: relative;
+    padding-left: 1.4rem;
+    color: var(--ink-soft);
+    font-size: 0.97rem;
+  }
+  .step-points li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.62em;
+    width: 8px;
+    height: 8px;
+    border: 2px solid var(--thread);
+    border-radius: 50%;
+  }
+
+  /* ---------- get involved patches ---------- */
+  .patches {
+    display: flex;
+    gap: 1.6rem;
+    flex-wrap: wrap;
+    margin-top: 1.6rem;
+  }
+  .patch {
+    flex: 1 1 240px;
+    position: relative;
+    border: 3px dashed var(--canvas-line);
+    border-radius: 3px;
+    padding: 1.6rem 1.4rem 1.5rem;
+  }
+  .patch::before {
+    content: "";
+    position: absolute;
+    top: -7px;
+    left: 18px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--thread);
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.3);
+  }
+  .patch:nth-child(1) { background: color-mix(in srgb, var(--denim) 10%, transparent); transform: rotate(-0.6deg); }
+  .patch:nth-child(2) { background: color-mix(in srgb, var(--thread) 10%, transparent); transform: rotate(0.5deg); }
+  .patch:nth-child(3) { background: color-mix(in srgb, var(--sage) 14%, transparent); transform: rotate(-0.3deg); }
+  .patch h3 { margin: 0 0 0.5rem; font-size: 1.15rem; }
+  .patch p { margin: 0 0 1.1rem; font-size: 0.97rem; max-width: none; }
+
+  /* ---------- footer ---------- */
+  footer {
+    background: var(--denim-deep);
+    color: #D9D4C2;
+    padding: 2.4rem 1.5rem;
+    margin-top: 1rem;
+  }
+  footer .wrap { display: flex; flex-direction: column; gap: 0.5rem; }
+  footer p { margin: 0; font-size: 0.9rem; color: #B9B5A4; max-width: 60ch; }
+  footer .legal { font-size: 0.8rem; color: #8B8878; margin-top: 0.8rem; }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <a href="#top" class="wordmark">
+    <span class="big">Foggy Fixers</span>
+    <span class="small">A repair café in the Inner Richmond</span>
+  </a>
+  <button class="nav-toggle-btn" id="navToggleBtn" aria-expanded="false" aria-controls="siteNav">Menu</button>
+  <nav class="nav" id="siteNav">
+    <a href="#info">What is a Repair Café?</a>
+    <a href="#what-we-fix">What to bring</a>
+    <a href="#how-it-works">How it works</a>
+    <a href="#get-involved">Get involved</a>
+  </nav>
+</header>
+
+<main>
+  <section class="hero" id="top">
+    <div>
+      <h1>Foggy Fixers</h1>
+      <p class="lede">We're building a new repair café for the Inner Richmond — neighbors fixing neighbors' things, for free. We haven't opened yet, but we're gathering the people to make it happen.</p>
+      <div class="hero-ctas">
+        <!-- TODO: replace href with your real volunteer Google Form URL -->
+        <a class="btn btn-primary btn-lg" href="https://forms.gle/REPLACE-WITH-VOLUNTEER-FORM" target="_blank" rel="noopener">Become a volunteer</a>
+        <!-- TODO: replace href with your real email-list sign-up URL (Google Form, Mailchimp, etc.) -->
+        <a class="btn btn-outline btn-lg" href="https://forms.gle/REPLACE-WITH-EMAIL-FORM" target="_blank" rel="noopener">Join the email list</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="seam"></div>
+
+  <section id="info">
+    <h2>What is a repair café?</h2>
+    <p>A repair café is a free, recurring meet-up where people bring in broken belongings — lamps, chairs, jeans, blenders, toys — and skilled neighbors help fix them, side by side. It's run entirely by volunteers, free to attend, and powered by people who'd rather fix something than throw it away.</p>
+    <p>We're starting one for the Inner Richmond: a volunteer-run, neighbor-to-neighbor project to keep our belongings working, share knowledge and skills, and spend a weekend day fixing something together instead of replacing it.</p>
+    <p>Foggy Fixers is a volunteer-run repair café inspired by <a href="https://repaircafesf.org/">Repair Café SF</a> and <a href="https://sfmissionrepaircafe.com/">Mission Repair Café</a>.  We aim to bring the <a href="https://www.repaircafe.org/en/">repair café movement</a> to another corner of the city.</p>
+  </section>
+
+  <div class="seam"></div>
+
+  <section id="what-we-fix">
+    <h2>What can I bring?</h2>
+    <p>Anything broken in these categories that you can carry is welcome, and has a good chance of getting repaired:</p>
+    <div class="tag-board">
+      <span class="tag">Electrical &amp; electronic appliances</span>
+      <span class="tag">Clean clothing</span>
+      <span class="tag">Furniture</span>
+      <span class="tag">Housewares</span>
+      <span class="tag">Toys</span>
+    </div>
+    <p>Please read the <!-- TODO: link to house rules / waiver document --><a href="#" id="houseRulesLink">house rules and waiver</a> before you come — they cover a few important things about how the day works.</p>
+
+    <h2 class="subhead">What we can't repair</h2>
+    <p>Some things are out of scope, either because they're better handled elsewhere or because they're unsafe or impractical for us to take on:</p>
+    <ul class="no-fix">
+      <li>Items still under warranty</li>
+      <li>Bicycles — many SF bike shops can help, and the SF Public Library runs a rotating bike repair clinic at branch libraries</li>
+      <li>Microwaves</li>
+      <li>Mobile phones — though we're happy to give advice on use</li>
+      <li>Earphones / earbuds</li>
+      <li>Cameras — though we might have some advice</li>
+      <li>Watches</li>
+      <li>Sewing alterations to clothes or curtains</li>
+      <li>Zips — usually too time-consuming</li>
+      <li>Leather stitching — needs an industrial sewing machine</li>
+      <li>Petrol-driven products</li>
+      <li>3-phase power tools</li>
+      <li>Anything that could be hazardous to our repairers, such as items known to contain asbestos</li>
+      <li>Many toasters, which often can't be repaired</li>
+    </ul>
+  </section>
+
+  <div class="seam"></div>
+
+  <section id="how-it-works">
+    <h2>How it works</h2>
+    <ol class="steps">
+      <li>
+        <span class="step-num">1</span>
+        <div>
+          <h3>Bring your broken item</h3>
+          <p>Participants bring in items that are broken or not working, fill out a short form, and sign a waiver. Check the list above for what we can and can't repair.</p>
+        </div>
+      </li>
+      <li>
+        <span class="step-num">2</span>
+        <div>
+          <h3>Get matched with a repairer</h3>
+          <p>Skilled volunteers work one-on-one with you to:</p>
+          <ul class="step-points">
+            <li>Diagnose the problem</li>
+            <li>Attempt a repair using the materials and tools on hand at the café</li>
+            <li>If a repair isn't possible, point you toward where to go next or how to recycle the item</li>
+          </ul>
+        </div>
+      </li>
+      <li>
+        <span class="step-num">3</span>
+        <div>
+          <h3>Learn and connect</h3>
+          <p>Repair cafés are about learning and community as much as repair. The emphasis is on:</p>
+          <ul class="step-points">
+            <li>Fixing things together — this is collaborative, not a drop-off service</li>
+            <li>Sharing skills — you watch, help, and learn as your item gets repaired</li>
+            <li>Keeping good things in use and out of the landfill</li>
+          </ul>
+        </div>
+      </li>
+    </ol>
+  </section>
+
+  <div class="seam"></div>
+
+  <section id="get-involved">
+    <h2>Help us open the doors</h2>
+    <p>We're pre-launch: no venue or date yet. These three things are how a first event actually happens.</p>
+    <div class="patches">
+      <div class="patch">
+        <h3>Fix things with us</h3>
+        <p>Sewists, woodworkers, tinkerers, small-appliance fixers, patient explainers — if you can fix, or want to learn by doing, we want you.</p>
+        <!-- TODO: replace href with your real volunteer Google Form URL -->
+        <a class="btn btn-primary" href="https://forms.gle/REPLACE-WITH-VOLUNTEER-FORM" target="_blank" rel="noopener" id="volunteerLink">Sign up to volunteer</a>
+      </div>
+      <div class="patch">
+        <h3>Hear about our first event</h3>
+        <p>One email when we lock in a date and location. No newsletter flood.</p>
+        <!-- TODO: replace href with your real email-list sign-up URL (Google Form, Mailchimp, etc.) -->
+        <a class="btn btn-primary" href="https://forms.gle/REPLACE-WITH-EMAIL-FORM" target="_blank" rel="noopener">Join the email list</a>
+      </div>
+      <div class="patch">
+        <h3>Follow along</h3>
+        <p>We're just getting started on Instagram too — follow now and watch it fill up.</p>
+        <!-- TODO: replace with actual @handle once the account is created -->
+        <a class="btn btn-primary" href="https://instagram.com/" target="_blank" rel="noopener">Follow us</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p class="legal">© 2026 Foggy Fixers.</p>
+  </div>
+</footer>
+
+<script>
+  var navBtn = document.getElementById('navToggleBtn');
+  var nav = document.getElementById('siteNav');
+  navBtn.addEventListener('click', function () {
+    var isOpen = nav.classList.toggle('open');
+    navBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  });
+  nav.querySelectorAll('a').forEach(function (link) {
+    link.addEventListener('click', function () {
+      nav.classList.remove('open');
+      navBtn.setAttribute('aria-expanded', 'false');
+    });
+  });
+</script>
+
+</body>
+</html>
